@@ -79,14 +79,10 @@
 
      alacritty
      firefox
+     xeepassxc
      libreoffice
      krita
      inkscape
-
-     rustup
-     go
-     zig
-     fnm
     ];
   };
 
@@ -106,6 +102,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+  pass
   git
   git-credential-manager
   curl
@@ -147,7 +144,6 @@
     enable = true;
     enableSSHSupport = true;
   };
-
   # List services that you want to enable
   security.rtkit.enable = true;
   services.pipewire = {
