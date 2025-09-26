@@ -79,10 +79,10 @@
 
      alacritty
      firefox
-     xeepassxc
-     libreoffice
+     libreoffice-fresh
      krita
      inkscape
+     keepassxc
     ];
   };
 
