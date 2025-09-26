@@ -98,6 +98,14 @@
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_config_HOME = "$HOME/.config";
   };
+  xdg.portal = {
+    enable = true;
+    extraPortals = let inherit(pkgs) xdg-desktop-portal-wlr xdg-desktop-portal-gtk; in [
+      xdg-desktop-portal-wlr  
+      xdg-desktop-portal-gtk
+    ];
+    gtkUsePortal = true;
+  };
   
   # List packages installed in system profile. To search, run:
   # $ nix search wget
