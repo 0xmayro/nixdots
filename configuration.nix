@@ -104,7 +104,6 @@
       xdg-desktop-portal-wlr  
       xdg-desktop-portal-gtk
     ];
-    gtkUsePortal = true;
   };
   
   # List packages installed in system profile. To search, run:
@@ -135,7 +134,6 @@
     nerd-fonts.meslo-lg
     nerd-fonts.symbols-only
   ];
-  xdg.portal.wlr.enable = true;
   
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
