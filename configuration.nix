@@ -78,11 +78,12 @@
      neovim
 
      alacritty
+     syncthingtray
+     keepassxc
      firefox
      libreoffice-fresh
      krita
      inkscape
-     keepassxc
     ];
   };
 
@@ -120,8 +121,6 @@
   clang-tools
   vim
 
-	nixd
-
   brightnessctl
   ];
 
@@ -129,6 +128,9 @@
     noto-fonts
     noto-fonts-emoji
     noto-fonts-cjk-sans
+    open-fonts
+    openmoji-color
+    
     
     nerd-fonts._0xproto
     nerd-fonts.meslo-lg
@@ -143,15 +145,17 @@
   programs.river = {
     enable = true;
     xwayland.enable = true;
-    extraPackages = with pkgs; [ fuzzel wlogout waybar swww ];
+    extraPackages = with pkgs; [ rofi-wayland fuzzel wlogout waybar swww ];
   };
   
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
   };
+
   # List services that you want to enable
   security.rtkit.enable = true;
+  
   services.pipewire = {
      enable = true;
      alsa.enable = true;
@@ -161,6 +165,11 @@
   };
 
   services.power-profiles-daemon.enable = true;
+  
+  services.syncthing = {
+    enable = true;
+    openDefaultPorts = true;
+  };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
