@@ -122,6 +122,8 @@
   vim
 
   brightnessctl
+
+  nil
   ];
 
   fonts.packages = with pkgs; [
