@@ -70,6 +70,12 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
+  users.users.greeter = {
+    isSystemUser = true;
+    group = "greeter";
+    shell = pkgs.bash;
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   
@@ -112,6 +118,7 @@
   swww
 
   greetd.tuigreet
+  greetd.agreety
   
   alacritty
   starship
@@ -157,7 +164,7 @@
   services.greetd = {
     enable = true;
     settings = {
-      command = "${pkgs.greetd}/bin/agreety --cmd river";
+      command = "${pkgs.greetd.agreety}/bin/agreety --cmd river";
       user = "greeter";
     };
   };
