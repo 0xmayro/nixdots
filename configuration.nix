@@ -158,7 +158,7 @@
   programs.git = {
     enable = true;
     extraConfig = {
-      creential.helper = "${pkgs.git-credential-libsecret}/bin/git-credential-libsecret";
+      credential.helper = "${pkgs.git-credential-libsecret}/bin/git-credential-libsecret";
     };
   };
   programs.gnupg.agent = {
