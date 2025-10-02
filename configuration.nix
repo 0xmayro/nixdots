@@ -72,9 +72,11 @@
 
   users.users.greeter = {
     isSystemUser = true;
+    description = "Greetd Greeter User";
     group = "greeter";
     shell = pkgs.bash;
   };
+  users.groups.greeter = {};
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
