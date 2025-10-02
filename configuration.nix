@@ -157,7 +157,7 @@
   services.greetd = {
     enable = true;
     settings = {
-      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --remember-session --cmd river";
+      command = "${pkgs.greetd.agreety}/bin/agreety --cmd river";
       user = "greeter";
     };
   };
