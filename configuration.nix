@@ -94,7 +94,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   libsecret
-  gnome.gnome-keyring
+  gnome-keyring
   curl
   wget
   stow
