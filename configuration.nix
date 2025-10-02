@@ -110,6 +110,8 @@
   wlogout
   waybar
   swww
+
+  greetd.tuigreet
   
   alacritty
   starship
