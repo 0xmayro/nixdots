@@ -68,8 +68,6 @@
     isNormalUser = true;
     description = "May Ronen";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [ 
-    ];
   };
 
   # Allow unfree packages
@@ -101,13 +99,16 @@
   wget
   stow
   llvm
-
   clang
   clang-tools
-  vim
-  neovim
+  
   brightnessctl
-
+  rofi-wayland 
+  fuzzel
+  wlogout
+  waybar
+  sww
+  
   alacritty
   starship
   zoxide
@@ -115,6 +116,9 @@
   nushell
   fish
   tmux
+  
+  vim
+  neovim
   
   syncthingtray
   keepassxc
@@ -157,8 +161,9 @@
 
   programs.git = {
     enable = true;
+package = pkgs.git.override { withLibsecret = true; };
     extraConfig = {
-      credential.helper = "${pkgs.git-credential-libsecret}/bin/git-credential-libsecret";
+      credential.helper = "libsecret";
     };
   };
   programs.gnupg.agent = {
