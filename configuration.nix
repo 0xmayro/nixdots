@@ -165,8 +165,10 @@
   services.greetd = {
     enable = true;
     settings = {
-      command = "${pkgs.greetd.greetd}/bin/agreety --cmd river";
-      user = "greeter";
+      default_session = {
+        command = "${pkgs.greetd.greetd}/bin/agreety --cmd river";
+        user = "greeter";
+      };
     };
   };
 
