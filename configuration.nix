@@ -176,7 +176,9 @@
 
   # List services that you want to enable
   security.rtkit.enable = true;
-  
+  security.pam.services = {
+    login.enableGnomeKeyring = true;
+  };
   services.pipewire = {
      enable = true;
      alsa.enable = true;
@@ -184,7 +186,8 @@
      pulse.enable = true;
      wireplumber.enable = true;
   };
-
+  
+  services.gnome.gnome-keyring.enable = true;
   services.power-profiles-daemon.enable = true;
   
   services.syncthing = {
