@@ -161,7 +161,7 @@
 
   programs.git = {
     enable = true;
-package = pkgs.git.override { withLibsecret = true; };
+    package = pkgs.git.override { withLibsecret = true; };
     extraConfig = {
       credential.helper = "libsecret";
     };
