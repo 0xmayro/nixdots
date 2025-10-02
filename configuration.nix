@@ -118,7 +118,6 @@
   swww
   greetd.greetd
   greetd.tuigreet
-  greetd.agreety
   
   alacritty
   starship
@@ -164,7 +163,7 @@
   services.greetd = {
     enable = true;
     settings = {
-      command = "${pkgs.greetd}/bin/agreety --cmd river";
+      command = "${pkgs.greetd.greetd}/bin/agreety --cmd river";
       user = "greeter";
     };
   };
