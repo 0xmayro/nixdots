@@ -95,8 +95,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  git
-  git-libsecret
+  libsecret
+  gnome.gnome-keyring
   curl
   wget
   stow
@@ -155,6 +155,12 @@
     };
   };
 
+  programs.git = {
+    enable = true;
+    extraConfig = {
+      creential.helper = "${pkgs.git-credential-libsecret}/bin/git-credential-libsecret";
+    };
+  };
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
