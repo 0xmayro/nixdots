@@ -107,7 +107,7 @@
   fuzzel
   wlogout
   waybar
-  sww
+  swww
   
   alacritty
   starship
