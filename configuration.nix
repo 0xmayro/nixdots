@@ -101,7 +101,9 @@
   llvm
   clang
   clang-tools
-  
+  wl-clipboard
+  clipman
+  cliphist
   brightnessctl
   rofi-wayland 
   fuzzel
@@ -149,12 +151,11 @@
   programs.river = {
     enable = true;
     xwayland.enable = true;
-    extraPackages = with pkgs; [ rofi-wayland fuzzel wlogout waybar swww ];
   };
   services.greetd = {
     enable = true;
     settings = {
-      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --remember-session";
+      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --remember-session --cmd river";
       user = "greeter";
     };
   };
