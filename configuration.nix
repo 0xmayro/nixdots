@@ -69,21 +69,6 @@
     description = "May Ronen";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [ 
-     nushell
-     fish
-     starship
-     zoxide
-     atuin  
-     tmux
-     neovim
-
-     alacritty
-     syncthingtray
-     keepassxc
-     firefox
-     libreoffice-fresh
-     krita
-     inkscape
     ];
   };
 
@@ -110,20 +95,33 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  pass
   git
-  git-credential-manager
+  git-libsecret
   curl
   wget
   stow
   llvm
+
   clang
   clang-tools
   vim
-
+  neovim
   brightnessctl
 
-  nil
+  alacritty
+  starship
+  zoxide
+  atuin  
+  nushell
+  fish
+  tmux
+  
+  syncthingtray
+  keepassxc
+  firefox
+  libreoffice-fresh
+  krita
+  inkscape
   ];
 
   fonts.packages = with pkgs; [
@@ -149,7 +147,14 @@
     xwayland.enable = true;
     extraPackages = with pkgs; [ rofi-wayland fuzzel wlogout waybar swww ];
   };
-  
+  services.greetd = {
+    enable = true;
+    settings = {
+      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --remember-session";
+      user = "greeter";
+    };
+  };
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
