@@ -14,7 +14,7 @@
     nixosConfigurations.seraphim = nixpkgs.lib.nixosSystem {
       system = arch;
       modules = [
-        ./configuration.nix
+        ./hosts/seraphim/configuration.nix
       ];
     };
     
