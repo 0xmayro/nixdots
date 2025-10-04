@@ -5,18 +5,17 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader
   boot.loader = {
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot";
-      };
-      grub = {
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot";
+    };
+    grub = {
       enable = true;
       efiSupport = true;
       useOSProber = true;
@@ -29,7 +28,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "seraphim"; # Define your hostname.
- 
+
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -76,69 +75,88 @@
     group = "greeter";
     shell = pkgs.bash;
   };
-  users.groups.greeter = {};
+  users.groups.greeter = { };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  
+
   environment.variables = rec {
     VISUAL = "nvim";
-    EDITOR = VISUAL; 
+    EDITOR = VISUAL;
   };
-  
+
   environment.sessionVariables = {
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_config_HOME = "$HOME/.config";
   };
   xdg.portal = {
     enable = true;
-    extraPortals = let inherit(pkgs) xdg-desktop-portal-wlr xdg-desktop-portal-gtk; in [
-      xdg-desktop-portal-wlr  
-      xdg-desktop-portal-gtk
-    ];
+    extraPortals =
+      let inherit (pkgs) xdg-desktop-portal-wlr xdg-desktop-portal-gtk;
+      in [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk ];
   };
-  
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  libsecret
-  gnome-keyring
-  curl
-  wget
-  stow
-  llvm
-  clang
-  clang-tools
-  wl-clipboard
-  clipman
-  cliphist
-  brightnessctl
-  rofi-wayland 
-  fuzzel
-  wlogout
-  waybar
-  swww
-  greetd.greetd
-  greetd.tuigreet
-  
-  alacritty
-  starship
-  zoxide
-  atuin  
-  nushell
-  fish
-  tmux
-  
-  vim
-  neovim
-  
-  syncthingtray
-  keepassxc
-  firefox
-  libreoffice-fresh
-  krita
-  inkscape
+    libsecret
+    gnome-keyring
+    curl
+    wget
+    stow
+    llvm
+    clang
+    clang-tools
+    wl-clipboard
+    clipman
+    cliphist
+    brightnessctl
+    rofi-wayland
+    fuzzel
+    wlogout
+    waybar
+    swww
+    greetd.greetd
+    greetd.tuigreet
+
+    alacritty
+    starship
+    zoxide
+    atuin
+    nushell
+    fish
+    tmux
+
+    vim
+    neovim
+
+    syncthingtray
+    keepassxc
+    firefox
+    libreoffice-fresh
+    krita
+    inkscape
   ];
+
+  programs.nano.enable = false;
+
+  programs.river = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+  programs.direnv.enable = true;
+
+  programs.git = {
+    enable = true;
+    package = pkgs.git.override { withLibsecret = true; };
+    config = { credential.helper = "libsecret"; };
+  };
+
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
 
   fonts.packages = with pkgs; [
     noto-fonts
@@ -146,22 +164,25 @@
     noto-fonts-cjk-sans
     open-fonts
     openmoji-color
-    
-    
+
     nerd-fonts._0xproto
     nerd-fonts.meslo-lg
     nerd-fonts.symbols-only
   ];
-  
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  programs.nano.enable =  false;
-  
-  programs.river = {
+
+  # List services that you want to enable
+  security.rtkit.enable = true;
+
+  security.pam.services = { login.enableGnomeKeyring = true; };
+
+  services.pipewire = {
     enable = true;
-    xwayland.enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
   };
+
   services.greetd = {
     enable = true;
     settings = {
@@ -172,34 +193,10 @@
     };
   };
 
-  programs.git = {
-    enable = true;
-    package = pkgs.git.override { withLibsecret = true; };
-    config = {
-      credential.helper = "libsecret";
-    };
-  };
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-
-  # List services that you want to enable
-  security.rtkit.enable = true;
-  security.pam.services = {
-    login.enableGnomeKeyring = true;
-  };
-  services.pipewire = {
-     enable = true;
-     alsa.enable = true;
-     alsa.support32Bit = true;
-     pulse.enable = true;
-     wireplumber.enable = true;
-  };
-  
   services.gnome.gnome-keyring.enable = true;
+
   services.power-profiles-daemon.enable = true;
-  
+
   services.syncthing = {
     enable = true;
     openDefaultPorts = true;
@@ -208,18 +205,7 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
-
+  # recommended to leave at the default value ("25.05").
+  # Before changing read the docs: `man configuration.nix`.
+  system.stateVersion = "25.05";
 }

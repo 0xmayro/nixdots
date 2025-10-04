@@ -18,10 +18,9 @@
       ];
     };
     
-    devShells.${arch}.default = pkgs.mkShell {
-      packages = with pkgs; [ nil nixpkgs-fmt ];
+    devShells = {
+        default = pkgs.callPackage ./shell.nix {};
     };
-    formatter.${arch} = pkgs.nixpkgs-fmt;
   };
 }
 
