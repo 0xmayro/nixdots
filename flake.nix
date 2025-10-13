@@ -18,9 +18,7 @@
       ];
     };
     
-    devShells = {
-        default = pkgs.callPackage ./shell.nix {};
-    };
+    devShells.${arch}.default = pkgs.callPackage ./shell.nix {};
   };
 }
 

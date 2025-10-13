@@ -1,3 +1,10 @@
-{ pkgs ? import <nixpkgs> { } }:
+{
+  mkShell,
 
-pkgs.mkShell { packages = [ pkgs.nixd pkgs.nixfmt-classic ]; }
+  nixd,
+  nixfmt-classic,
+}:
+mkShell {
+
+  packages = [ nixd nixfmt-classic ];
+}
