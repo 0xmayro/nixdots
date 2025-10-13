@@ -29,9 +29,6 @@
 
   networking.hostName = "seraphim"; # Define your hostname.
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -58,8 +55,8 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Configure keymap in X11
   services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+    layout = "us,il";
+    variant = "grp:caps_lock_toggle";
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -68,7 +65,6 @@
     description = "May Ronen";
     extraGroups = [ "networkmanager" "wheel" ];
   };
-
   users.users.greeter = {
     isSystemUser = true;
     description = "Greetd Greeter User";
