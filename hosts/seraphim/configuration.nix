@@ -132,6 +132,7 @@
     libreoffice-fresh
     krita
     inkscape
+    obsidian
   ];
 
   programs.nano.enable = false;
