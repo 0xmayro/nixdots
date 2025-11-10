@@ -29,7 +29,6 @@
 
   networking.hostName = "seraphim"; # Define your hostname.
 
-
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -133,6 +132,9 @@
     krita
     inkscape
     obsidian
+
+    nixd
+    nixfmt-rfc-style
   ];
 
   programs.nano.enable = false;
