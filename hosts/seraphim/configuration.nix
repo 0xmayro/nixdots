@@ -9,19 +9,25 @@
     ./hardware-configuration.nix
   ];
 
-  # Bootloader
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot";
+  # Use the systemd-boot EFI boot loader.
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
     };
-    grub = {
-      enable = true;
-      efiSupport = true;
-      useOSProber = true;
-      device = "nodev";
-      default = "2";
+    initrd.luks.devices = {
+      luksroot = {
+        device = "dev/disk/by-uuid/b8134c4b-584a-4751-9dde-18843f41a5ef";
+        preLVM = true;
+        allowDiscards = true;
+      };
     };
+  };
+  
+  fileSystems = {
+    "/".options = [ "rw" "noatime" "compress=zstd" "discard=async"];
+    "/home".options = [ "rw" "noatime" "compress=zstd" "discard=async"];
+    "/nix".options = [ "rw" "noatime" "compress=zstd" "discard=async"];
   };
 
   # Use latest kernel.

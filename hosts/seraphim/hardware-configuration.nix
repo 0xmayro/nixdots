@@ -8,25 +8,37 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ "dm-snapshot" ];
+  boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/28293ea0-25e4-4914-89cf-f0fda968ec7a";
+    { device = "/dev/disk/by-uuid/86aa9102-09dc-4317-a0eb-c72d8351db93";
       fsType = "btrfs";
       options = [ "subvol=@" ];
     };
 
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/86aa9102-09dc-4317-a0eb-c72d8351db93";
+      fsType = "btrfs";
+      options = [ "subvol=@home" ];
+    };
+
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/86aa9102-09dc-4317-a0eb-c72d8351db93";
+      fsType = "btrfs";
+      options = [ "subvol=@nix" ];
+    };
+
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/B150-E456";
+    { device = "/dev/disk/by-uuid/6992-BF51";
       fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
+      options = [ "fmask=0022" "dmask=0022" ];
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/e0931683-d566-4fb7-85b0-18827f03709f"; }
+    [ { device = "/dev/disk/by-uuid/82a8ed03-be5e-49b4-af52-af0703996fef"; }
     ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -34,8 +46,9 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp2s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp195s0f0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp194s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
